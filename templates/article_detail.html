@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}{{ object.title }}{% endblock title %}
+{% block content %}
+
+<div class="container py-5">
+    <div class="card shadow-lg border-0 mb-4">
+        {% if object.photo %}
+        <img src="{{ object.photo.url }}" class="card-img-top rounded-top" alt="{{ object.title }}">
+        {% endif %}
+        <div class="card-body">
+            <h1 class="card-title fw-bold text-primary">{{ object.title }}</h1>
+            <h6 class="card-subtitle mb-3 text-muted">
+                Muallif: <strong>{{ object.author }}</strong> | {{ object.date }}
+            </h6>
+            <p class="card-text fs-5">{{ object.body | safe }}</p>
+            <div class="mt-4">
+                <a href="{% url 'articles:article_edit' object.pk %}" class="btn btn-sm btn-warning me-2">✏️ Tahrirlash</a>
+                <a href="{% url 'articles:article_delete' object.pk %}" class="btn btn-sm btn-danger me-2">🗑️ O‘chirish</a>
+                <a href="{% url 'articles:article_list' %}" class="btn btn-sm btn-outline-secondary">⬅️ Barcha postlar</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Izohlar bo‘limi -->
+   <!-- Izohlar bo‘limi -->
+<div class="card shadow-sm border-0 my-4">
+    <div class="card-header bg-primary text-white fw-bold">
+        Izohlar ({{ article.comments.count }})
+    </div>
+    {% if article.comments.exists %}
+        {% for comment in article.comments.all %}
+        <div class="card-body border-bottom">
+            <p class="mb-1">{{ comment }}</p>
+            <small class="text-muted">Izohchi: {{ comment.author }}</small>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="card-body">
+            <p class="text-muted mb-0">Hozircha hech qanday izoh yo'q.</p>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Izoh qoldirish formasi -->
+<div class="card shadow-sm border-0 my-4">
+    <div class="card-header bg-primary text-white fw-bold">
+        Izohlar ({{ article.comments.count }})
+    </div>
+    {% if article.comments.exists %}
+        {% for comment in article.comments.all %}
+            <div class="card-body border-bottom">
+                <p class="mb-1">{{ comment.comment }}</p>
+                <small class="text-muted">Izohchi: {{ comment.author }}</small>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="card-body">
+            <p class="text-muted mb-0">Hozircha hech qanday izoh yo'q.</p>
+        </div>
+    {% endif %}
+</div>
+
+
+
+{% endblock content %}

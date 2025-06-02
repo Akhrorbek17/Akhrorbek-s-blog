@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Saytga Kirish{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-0">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="mb-0">🔐 Saytga Kirish</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-success">🚪 Kirish</button>
+                            <a href="{% url 'password_reset' %}" class="btn btn-outline-danger">🔁 Kalit so‘zni tiklash</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <small>Hali ro'yxatdan o'tmaganmisiz? <a href="{% url 'accounts:signup' %}">Ro'yxatdan o'tish</a></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

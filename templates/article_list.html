@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Postlar{% endblock title %}
+{% block content %}
+
+<div class="container py-5">
+    <h1 class="mb-4 text-center text-primary fw-bold">Barcha Postlar</h1>
+
+    <div class="row">
+        {% for article in object_list %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                {% if article.photo %}
+                <img src="{{ article.photo.url }}" class="card-img-top rounded-top" alt="{{ article.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url 'articles:article_detail' article.pk %}" class="text-decoration-none text-dark">
+                            {{ article.title }}
+                        </a>
+                    </h5>
+                    <p class="card-text text-muted">{{ article.summary|truncatewords:25 }}</p>
+                    <a href="{% url 'articles:article_detail' article.pk %}" class="btn btn-sm btn-outline-primary mt-2">Batafsil</a>
+                </div>
+                <div class="card-footer bg-white text-muted small">
+                    Muallif: <strong>{{ article.author|title }}</strong> | {{ article.date }}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-warning text-center" role="alert">
+                Hozircha hech qanday post mavjud emas.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}
