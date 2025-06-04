@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: myblog_14kt
+    env: python
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+      python manage.py migrate
+    startCommand: gunicorn config.wsgi
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        value: (django-insecure-4i_qux1)!ric6(yb=me+1$y)3h$sm)^5j(kkd_t$9%w-9%%r6v
+      - key: DEBUG
+        value: False
+      - key: ALLOWED_HOSTS
+        value: myblog_14kt.onrender.com
